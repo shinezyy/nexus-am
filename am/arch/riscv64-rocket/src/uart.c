@@ -1,5 +1,6 @@
 #include <klib.h>
 #include "fdt.h"
+#include <riscv64-rocket.h>
 
 volatile uint8_t* uart_base_ptr;
 
@@ -55,6 +56,7 @@ void uart_disable_read_irq() {
 	*(uart_base_ptr + UART_CTRL_REG) = 0x0000u;
 }
 
+/*
 struct uart_scan
 {
   int compat;
@@ -85,9 +87,11 @@ static void uart_done(const struct fdt_scan_node *node, void *extra)
   // Enable Rx/Tx channels
   uart_base_ptr = (void*)scan->reg;
 }
+*/
 
 void uart_init(uintptr_t fdt)
 {
+  /*
   struct fdt_cb cb;
   struct uart_scan scan;
 
@@ -103,10 +107,9 @@ void uart_init(uintptr_t fdt)
 	  //uart_base_ptr = (void *)0x60000000;
     return;
   }
-  /*
-
-  uart_base_ptr += read_const_csr(mhartid) * 0x10000;
   */
+
+  uart_base_ptr = (void *)0x1000 + read_const_csr(mhartid) * 0x1000;
 
   // reset the receive FIFO and transmit FIFO
   *(uart_base_ptr + UART_CTRL_REG) = 0x3;
