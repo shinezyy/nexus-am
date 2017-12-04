@@ -11,6 +11,7 @@ here:
   la sp, stack_end
   tail _trm_init
 
+.align 3
 stack:
   .skip 0x4000
 stack_end:
