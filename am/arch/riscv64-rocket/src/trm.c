@@ -12,6 +12,9 @@ _Area _heap = {
 
 void _putc(char ch) {
   uart_send(ch);
+  if (ch == '\n') {
+    uart_send('\r');
+  }
 }
 
 static void puts(const char *s) {
