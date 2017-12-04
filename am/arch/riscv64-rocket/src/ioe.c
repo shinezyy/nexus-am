@@ -1,14 +1,17 @@
 #include <am.h>
+#include "riscv64-rocket.h"
+
+static unsigned long boot_time = 0;
+#define HZ 100000000
 
 void _ioe_init() {
+  boot_time = read_const_csr(mcycle) / (HZ / 1000);
 }
 
 // -------------------- cycles and uptime --------------------
 
-static unsigned long riscv64_time = 0;
-
 unsigned long _uptime(){
-  return riscv64_time ++;
+  return read_const_csr(mcycle) / (HZ / 1000) - boot_time;
 }
 
 // -------------------- video --------------------
