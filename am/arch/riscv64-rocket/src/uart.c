@@ -9,14 +9,12 @@ volatile uint8_t* uart_base_ptr;
 #define UART_CTRL_REG 0xc
 
 void uart_send(uint8_t data) {
-  return;
 	// wait until THR empty
 	while((*(uart_base_ptr + UART_STAT_REG) & 0x08));
 	*(uart_base_ptr + UART_TX_FIFO_REG) = data;
 }
 
 int uart_recv() {
-  return -1;
 	// check whether RBR has data
 	if(! (*(uart_base_ptr + UART_STAT_REG) & 0x01u)) {
 		return -1;
