@@ -41,7 +41,7 @@ void _halt(int code) {
 void _trm_init() {
   uart_init();
 
-  int mem_size = 0x800000;
+  int mem_size = 0x2000000;
   _heap.end = (void *)0x80000000 + mem_size;
 
   int ret = main();
