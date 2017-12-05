@@ -34,6 +34,10 @@ static inline int upevent(int e) { return e; }
 static inline int downevent(int e) { return e | 0x8000; }
 
 int _read_key(){
-  return _KEY_NONE;
+  int uart_recv();
+  int key = uart_recv();
+  if (key == -1) {
+    return _KEY_NONE;
+  }
+  return key;
 }
-
