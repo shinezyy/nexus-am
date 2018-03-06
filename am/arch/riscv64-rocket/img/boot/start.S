@@ -8,8 +8,19 @@ _start:
 magic_num:
   .word 0xdeadbeef
 here:
+  la t0, handle_trap
+  csrw mtvec, t0
+  csrr t1, mtvec
+1:bne t0, t1, 1b
   la sp, stack_end
   tail _trm_init
+
+
+
+handle_trap:
+  # exception stack (for simulation)
+  li sp, 0x80fff000
+  tail bad_trap
 
 .align 3
 stack:

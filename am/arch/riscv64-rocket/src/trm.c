@@ -1,5 +1,6 @@
 #include <am.h>
 #include <klib.h>
+#include "riscv64-rocket.h"
 
 extern char _end;
 extern int main();
@@ -17,7 +18,7 @@ void _putc(char ch) {
   }
 }
 
-static void puts(const char *s) {
+void puts(const char *s) {
   for (const char *p = s; *p; p ++) {
     _putc(*p);
   }
@@ -35,13 +36,16 @@ void _halt(int code) {
   }
   puts(").\n");
 
+  // asm volatile("csrwi 0x800, 0");
   while (1);
 }
+
+static volatile int test;
 
 void _trm_init() {
   uart_init();
 
-  int mem_size = 0x2000000;
+  int mem_size = 0x1000000;
   _heap.end = (void *)0x80000000 + mem_size;
 
   int ret = main();
