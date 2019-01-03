@@ -45,8 +45,9 @@ static volatile int test;
 void _trm_init() {
   uart_init();
 
-  int mem_size = 0x1000000;
-  _heap.end = (void *)0x80000000 + mem_size;
+  // microbnch needs at least 128MB
+  int mem_size = 0x8000000;
+  _heap.end = (void *)0x100000000 + mem_size;
 
   int ret = main();
   _halt(ret);

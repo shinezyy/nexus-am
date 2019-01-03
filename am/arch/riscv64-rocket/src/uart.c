@@ -30,6 +30,7 @@ int uart_recv() {
 }
 
 void uart_init() {
-  uart_base_ptr = (volatile void *)UART_BASE + read_const_csr(mhartid) * 0x10000;
+  // get real hart id
+  uart_base_ptr = (volatile void *)UART_BASE + read_const_csr(0x810) * 0x1000;
   *(uart_base_ptr + UART_CTRL_REG) = 0x3;
 }
